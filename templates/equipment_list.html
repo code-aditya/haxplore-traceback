@@ -18,16 +18,18 @@
           <div class="container">
               <div class="row">
                   <div class="col-lg-4 col-md-6">
+                    {% for equipment in equipments %}
                     <div class="post mb-5">
-                        <a class="image-content" href="blog-single.html">
+                        <a class="image-content" href="{% url 'equipment-detail' equipment.pk %}">
                             <img src="{% static 'images/blog/minimal-1.jpg' %}" alt="" class="img-fluid">
                         </a>
                 
                         <div class="post-content">
-                            <span class="date text-uppercase text-sm">17 june 2019</span>
-                            <a href="blog-single.html"><h4>If you are starting off with a new domain name with no traffic so to speak of you.</h4></a>
+                            <span class="date text-uppercase text-sm">{{equipment.start_dt | date}} - {{equipment.end_dt | date}}</span>
+                            <a href="blog-single.html"><h4>{{equipment.name}} for Rs. {{equipment.rental_price}}</h4></a>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
               </div>
           </div>

@@ -1,15 +1,22 @@
 from django.shortcuts import render
-
+from core.models import *
+from django.utils.timezone import now
+from django.shortcuts import get_object_or_404
 # Create your views here.
 
-def product_list(request):
-    template_name = 'catalog.html'
-    return render(request,template_name)
+def equipments_list(request):
+    equipments = Equipment.objects.filter(end_dt__gte = now() ).order_by('-timestamp')
+    context = {
+        'equipments':equipments,
+    }
+    return render(request, 'equipment_list.html', context=context)
 
-def product_detail(request):
-    template_name = 'community_question.html'
-    return render(request, template_name)
+def equipment_new(request):
+    return render(request, 'equipment_upload.html')
 
-def product_upload(request):
-    template_name = 'question_upload.html'
-    return render(request,template_name)
+def equipment_detail(request, pk):
+    template_name = 'equipment_detail.html'
+    context={
+        'equipment':get_object_or_404(Equipment,pk=pk),
+    }
+    return render(request, template_name, context=context)

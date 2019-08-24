@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.functional import cached_property
-from core import EQUIPMENT_TYPE_CHOICES
+from core import EQUIPMENT_TYPE_CHOICES,EQUIPMENT_TYPE_MAPS
 from farmconnect.validators import phone_regex
 
 
@@ -21,6 +21,7 @@ class Farmer(models.Model):
     joined = models.DateTimeField(auto_now_add=True)
     level = models.IntegerField(default=0)
     land_area = models.IntegerField('in hectares', default=0)
+    contact = models.CharField(validators=[phone_regex],max_length=15, null=True, blank=True)
 
     def __str__(self):
         return f'{self.name}'
@@ -58,12 +59,18 @@ class FarmerCropYield(models.Model):
 class Equipment(models.Model):
     farmer = models.ForeignKey(Farmer, on_delete=models.CASCADE)
     name = models.CharField(max_length=32)
-    photo = models.ImageField(upload_to=equipment_image_save_loc)
+    photo = models.ImageField(upload_to=equipment_image_save_loc, null=True, blank=True)
     rental_price = models.IntegerField(help_text='in Rs.', default=0)
     rental_days = models.IntegerField(default=0)
     start_dt = models.DateTimeField()
     end_dt = models.DateTimeField(null=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
     category = models.PositiveSmallIntegerField(choices=EQUIPMENT_TYPE_CHOICES)
+    description = models.TextField(null=True, blank=True)
+    @cached_property
+    def label_category(self):
+        return EQUIPMENT_TYPE_MAPS[self.category]
+        
 
 
 class Expert(models.Model):

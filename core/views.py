@@ -19,9 +19,3 @@ def user_logout(request):
     return redirect('homepage')
 
 
-def equipments_list(request):
-    return render(request, 'product_list.html')
-
-
-def equipment_new(request):
-    return render(request, 'equipment_upload.html')
