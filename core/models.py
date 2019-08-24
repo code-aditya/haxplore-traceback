@@ -27,11 +27,11 @@ class Farmer(models.Model):
 
     @cached_property
     def label_level(self):
-        if level == 0:
+        if self.level == 0:
             return 'Newbie'
-        elif level == 1:
+        elif self.level == 1:
             return 'Helpful'
-        elif level == 2:
+        elif self.level == 2:
             return 'Very Helpful'
         else:
             return 'Supportive'

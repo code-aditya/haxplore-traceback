@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from community import models, forms
 
@@ -14,8 +14,16 @@ def get_popular_tags():
 @login_required
 def community_home(request):
     farmer = request.user.farmer
-    community = farmer.community
-    pass
+    cf = farmer.community
+    community = cf.community
+    question_qs = models.CommunityQuestion.objects.filter(farmer__community=cf)
+    member_qs = models.CommunityFarmer.objects.filter(community=community)
+    ctx = {
+        'questions': question_qs,
+        'members': member_qs,
+        'tags': get_popular_tags()
+    }
+    return render(request, 'question_list.html', context=ctx)
 
 
 @login_required
@@ -35,3 +43,23 @@ def question_detail(request, ques_id):
         'tags': get_popular_tags()
     }
     return render(request, 'community_question.html', context=ctx)
+
+@login_required
+def question_new(request):
+    if request.method == 'POST':
+        farmer = request.user.farmer
+        data = dict(
+            farmer=farmer.id, community=farmer.community.id, title=request.POST.get('title', None),
+            content=request.POST.get('content', None), raw_tags=request.POST.get('raw_tags', None)
+        )
+        f = forms.QuestionForm(data)
+        if f.is_valid():
+            q = f.save()
+            return redirect('question-detail', ques_id=q.id)
+        else:
+            print(f.errors)
+    
+    ctx = {
+        'top_questions': models.CommunityQuestion.objects.order_by('-upvotes', '-asked')[:5]
+    }
+    return render(request, 'question_upload.html', context=ctx)

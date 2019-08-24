@@ -6,46 +6,47 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-8">
+                {% for ques in questions %}
 				<article class="single-post">
                     <div class="single-post-content mt-4">
                         <div class="post-meta mb-4">
                             <span class="text-black">Date :</span>
-                            <span class="date">17 june 2019</span>
+                            <span class="date">{{ ques.asked }}</span>
                         </div>
-                        <h3><a href="">If you are starting off with a new domain name with no traffic so to speak of you.</a></h3>
+                        <h3><a href="{% url 'question-detail' ques.id %}">{{ ques.title }}</a></h3>
                         
                         <span class="text-black">By:</span>
-                        <span>Ameitansh</span>
-                        <span style="float:right;">Pesticides, Crop</span>
-                        <span class="text-black" style="float:right;">Tags:</span>
+                        <span>{{ ques.farmer.name }}</span>
+                        <span style="float:right;">{{ ques.tags|join:", " }}</span>
+                        <span class="text-black" style="float:right;">Tags: </span>
                     </div>
                     <hr>
                 </article>
+                {% endfor %}
 			</div>
 			<div class="col-lg-4">
 				<div class="sidebar-widget mt-5 mt-lg-0">
                     <div class="widget mb-5 tags">
                         <h4 class="mb-4 widget-title">Tags</h4>
                         <ul class="list-inline">
-                            <li class="list-inline-item"><a href="#">Design</a></li>
-                            <li class="list-inline-item"><a href="#">Marketing</a></li>
-                            <li class="list-inline-item"><a href="#">Development</a></li>
-                            <li class="list-inline-item"><a href="#">Seo</a></li>
-                            <li class="list-inline-item"><a href="#">agency</a></li>
-                            <li class="list-inline-item"><a href="#">wordpress</a></li>
+                            {% for tag in tags %}
+                            <li class="list-inline-item"><a href="#">{{ tag }}</a></li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>
                 <div class="widget mb-5">
                     <h4 class="mb-4 widget-title">Top Members</h4>
                     <ul class="list-unstyled">
+                        {% for memb in members %}
                         <li class="d-flex mb-4">
                             <img src="{% static 'images/blog/s-1.jpg' %}" alt="" class="img-fluid mr-3">
                             <div class="post-body">
-                                <a href="#"><h5>Mesut Ozil</h5></a>
-                                <span class="text-capitalize">Very Helpful</span>
+                                <a href="#"><h5>{{ memb.farmer.name }}</h5></a>
+                                <span class="text-capitalize">{{ memb.farmer.label_level }}</span>
                             </div>
                         </li>
+                        {% endfor %}
                     </ul>
                 </div>
 			</div>

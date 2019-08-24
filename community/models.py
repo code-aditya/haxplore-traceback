@@ -20,6 +20,9 @@ class CommunityFarmer(models.Model):
     farmer = models.OneToOneField('core.Farmer', on_delete=models.CASCADE, related_name='community')
     community = models.ForeignKey(Community, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f'{self.community} - {self.farmer}'
+
 
 class CommunityQuestion(models.Model):
     farmer = models.ForeignKey('core.Farmer', on_delete=models.CASCADE, related_name='questions')
@@ -33,7 +36,7 @@ class CommunityQuestion(models.Model):
 
     @cached_property
     def tags(self):
-        return self.raw_tags.split(';')
+        return self.raw_tags.split(',')
 
     def __str__(self):
         return f'{self.title}'
