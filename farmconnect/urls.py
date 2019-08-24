@@ -22,7 +22,8 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('equipments/',include('equipment_portal.urls')),
+    path("insights/",include("insights.urls")),
     path('', include('core.urls')),
     path('', include('community.urls')),
+    path('', include('chat.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
