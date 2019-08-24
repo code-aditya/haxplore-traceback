@@ -24,7 +24,6 @@
   <link rel="stylesheet" href="{% static 'plugins/magnific-popup/magnific-popup.css' %}">
   <link rel="stylesheet" href="{% static 'plugins/animated-text/animated-text.css' %}">
   <link rel="stylesheet" href="{% static 'css/tagsinput.css' %}">
-
   <!-- Main Stylesheet -->
   <link href="{% static 'css/style.css' %}" rel="stylesheet">
 
@@ -69,8 +68,8 @@
                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Insights</a>
                             <ul class="dropdown-menu" aria-labelledby="dropdown05">
-                                <li><a class="dropdown-item" href="blog-grid.html">Predictive Analysis</a></li>
-                                <li><a class="dropdown-item" href="blog-sidebar.html">Community Stats</a></li>
+                                <li><a class="dropdown-item" href="{% url 'predictive' %}">Predictive Analysis</a></li>
+                                <li><a class="dropdown-item" href="{% url 'trending' %}">Community Stats</a></li>
                                 <li><a class="dropdown-item" href="blog-single.html">Upload your results</a></li>
                             </ul>
                       </li>
@@ -124,7 +123,6 @@
     <script src="{% static 'plugins/counto/apear.js' %}"></script>
     <script src="{% static 'plugins/counto/counTo.js' %}"></script>
     <script src="{% static 'js/tagsinput.js' %}"></script>
-    
      <!-- Google Map -->
     <script src="{% static 'plugins/google-map/map.js' %}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAkeLMlsiwzp6b3Gnaxd86lvakimwGA6UA&callback=initMap"></script> 
