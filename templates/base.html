@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="{% static 'plugins/owl-carousel/owl.theme.default.min.css' %}">
   <link rel="stylesheet" href="{% static 'plugins/magnific-popup/magnific-popup.css' %}">
   <link rel="stylesheet" href="{% static 'plugins/animated-text/animated-text.css' %}">
+  <link rel="stylesheet" href="{% static 'css/tagsinput.css' %}">
 
   <!-- Main Stylesheet -->
   <link href="{% static 'css/style.css' %}" rel="stylesheet">
@@ -119,6 +120,7 @@
     <script src="{% static 'plugins/animated-text/animated-text.js' %}"></script>
     <script src="{% static 'plugins/counto/apear.js' %}"></script>
     <script src="{% static 'plugins/counto/counTo.js' %}"></script>
+    <script src="{% static 'js/tagsinput.js' %}"></script>
     
      <!-- Google Map -->
     <script src="{% static 'plugins/google-map/map.js' %}"></script>
@@ -126,4 +128,6 @@
     <!-- Main Script -->
     <script src="{% static 'js/script.js' %}"></script>
     </body>
+    {% block somethingelse %}
+    {% endblock %}
 </html>

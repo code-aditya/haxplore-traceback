@@ -11,5 +11,5 @@ def product_detail(request):
     return render(request, template_name)
 
 def product_upload(request):
-    template_name = 'login.html'
+    template_name = 'question_upload.html'
     return render(request,template_name)
