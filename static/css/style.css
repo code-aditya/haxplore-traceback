@@ -800,3 +800,12 @@ textarea.form-control {
 }
 
 /*# sourceMappingURL=maps/style.css.map */
+
+
+.chat-window {
+  position:fixed;
+  bottom:0;
+  right:0;
+  height: 400px;
+  width: 800px;
+}

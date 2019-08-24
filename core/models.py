@@ -80,6 +80,7 @@ class Expert(models.Model):
         (JOB_STUDENT, 'Student'),
         (JOB_GOVT_OFFICIAL, 'Government')
     )
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=32)
     phone = models.CharField(
         validators=[phone_regex], max_length=17,

@@ -86,8 +86,8 @@
         {% block main %}
         {% endblock %}
     
-<!-- Footer start -->
-<section class="footer">
+    <!-- Footer start -->
+    <section class="footer">
         <div class="container">
             <div class="row ">
                 <div class="col-lg-6">
@@ -111,6 +111,8 @@
     </section>
     <!-- Footer End -->
     
+    <iframe src="{% url 'chat-interface' %}" class="chat-window"></iframe>
+
     <!-- jQuery -->
     <script src="{% static 'plugins/jQuery/jquery.min.js' %}"></script>
     <!-- Bootstrap JS -->
