@@ -1,3 +1,7 @@
 from django.contrib import admin
+from core import models
 
-# Register your models here.
+
+@admin.register(models.Farmer, models.Crop, models.Equipment, models.FarmerCropYield)
+class Admin(admin.ModelAdmin):
+    pass

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.functional import cached_property
 from core import EQUIPMENT_TYPE_CHOICES
 from farmconnect.validators import phone_regex
 
@@ -24,6 +25,17 @@ class Farmer(models.Model):
     def __str__(self):
         return f'{self.name}'
 
+    @cached_property
+    def label_level(self):
+        if level == 0:
+            return 'Newbie'
+        elif level == 1:
+            return 'Helpful'
+        elif level == 2:
+            return 'Very Helpful'
+        else:
+            return 'Supportive'
+
 
 class Crop(models.Model):
     name = models.CharField(max_length=32)
@@ -34,20 +46,20 @@ class Crop(models.Model):
 class FarmerCropYield(models.Model):
     farmer = models.ForeignKey(Farmer, on_delete=models.CASCADE, related_name='crops', related_query_name='crop')
     crop = models.ForeignKey(Crop, on_delete=models.CASCADE, related_name='yields', related_query_name='yield')
-    yield_potential = models.IntegerField('in kg', default=0)
-    yield_effective = models.IntegerField('in kg')
-    yield_wastage = models.IntegerField('in kg', default=0)
-    cultivated_area = models.IntegerField('in hectares')
-    pesticides_used = models.IntegerField('in kg', default=0)
-    investment = models.IntegerField('in Rs.')
-    profit = models.IntegerField('in Rs.')
+    yield_potential = models.IntegerField(help_text='in kg', default=0)
+    yield_effective = models.IntegerField(help_text='in kg')
+    yield_wastage = models.IntegerField(help_text='in kg', default=0)
+    cultivated_area = models.IntegerField(help_text='in hectares')
+    pesticides_used = models.IntegerField(help_text='in kg', default=0)
+    investment = models.IntegerField(help_text='in Rs.')
+    profit = models.IntegerField(help_text='in Rs.')
 
 
 class Equipment(models.Model):
     farmer = models.ForeignKey(Farmer, on_delete=models.CASCADE)
     name = models.CharField(max_length=32)
     photo = models.ImageField(upload_to=equipment_image_save_loc)
-    rental_price = models.IntegerField('in Rs.', default=0)
+    rental_price = models.IntegerField(help_text='in Rs.', default=0)
     rental_days = models.IntegerField(default=0)
     start_dt = models.DateTimeField()
     end_dt = models.DateTimeField(null=True)

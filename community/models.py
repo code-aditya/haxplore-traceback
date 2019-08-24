@@ -9,6 +9,12 @@ class Community(models.Model):
     location_lat = models.FloatField(default=0)
     location_lon = models.FloatField(default=0)
 
+    class Meta:
+        verbose_name_plural = 'Communities'
+
+    def __str__(self):
+        return f'{self.name}'
+
 
 class CommunityFarmer(models.Model):
     farmer = models.OneToOneField('core.Farmer', on_delete=models.CASCADE)
