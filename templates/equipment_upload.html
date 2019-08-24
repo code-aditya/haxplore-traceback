@@ -19,21 +19,42 @@
 			<div class="col-lg-8">
                 <div class="comment-form bg-secondary p-4 mt-2">
                     <h4 class="mb-4">Fill in the Details</h4>
-                    <form action="#">
+                    <form action="" method="post">
+                        {% csrf_token %}
                         <div class="form-group">
                             <label>Select Category</label>
-                            <select class="form-control mb-3" placeholder="Category">
+                            <select name="category" class="form-control mb-3" placeholder="Category">
+                                {% for category in categories %}
+                                <option value="{{category.0}}">{{category.1}}</option>
+                                {% endfor %}
+                            </select>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Post title">
+                            <input type="text" name="name" class="form-control" placeholder="Post name">
                         </div>
                         <div class="form-group">
-                            <textarea name="msg" id="msg" cols="30" rows="4" class="form-control" placeholder="Description"></textarea>
+                            <textarea name="description" id="description" cols="30" rows="4" class="form-control" placeholder="Description"></textarea>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Your name">
+                            <!-- <label>Rental Price</label> -->
+                            <input type="number" name="rental_price" placeholder="Rental Price">
                         </div>
-                        <a href="#" class="btn btn-main">Upload</a>
+                        <div class="form-group">
+                            <label>Start Date</label>
+                            <input type="date" name="start_date" class="form-control" placeholder="Start Date">
+                        </div>
+                        <div class="form-group">
+                            <label>End Date</label>
+                            <input type="date" name="end_date" class="form-control" placeholder="End Date">
+                        </div>
+                        {% if messages %}
+                        <div class="form-group">
+                            {% for message in messages %}
+                            <span style="color:red;font-weight: bold;">{{message}}</span>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        <input class="btn btn-main"type="submit" name="submit" value="POST" />
                     </form>
                 </div>
 			</div>

@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block title %}
+FarmConnect | Portal
+{% endblock %}
 {% block main %}
 <!-- Navigation ENd -->
 
@@ -25,7 +28,7 @@
 					<li><span class="text-black">Category - </span><span style="color:gray;">{{equipment.label_category}}</span></li>
 					<li><span class="text-black">Start Date - </span><span style="color:gray;">{{equipment.start_dt | date}}</span></li>
 					<li><span class="text-black">End Date - </span><span style="color:gray;">{{equipment.end_dt | date}}</span></li>
-					<li><span class="text-black">Contact - </span><span style="color:gray;">{{equipment.contact}}</span></li>                    
+					<li><span class="text-black">Contact - <button class="btn btn-main btn-xs">Chat</button></li>                    
                 </ul>
             </div>
             <div class="col-lg-2">
