@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block main %}
+<section class="page-title section pb-0">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="text-center">
+          <h1 class="text-capitalize mb-0 text-lg">Upload Equipments</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section blog-post">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8">
+                <div class="comment-form bg-secondary p-4 mt-2">
+                    <h4 class="mb-4">Fill in the Details</h4>
+                    <form action="#">
+                        <div class="form-group">
+                            <label>Select Category</label>
+                            <select class="form-control mb-3" placeholder="Category">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Post title">
+                        </div>
+                        <div class="form-group">
+                            <textarea name="msg" id="msg" cols="30" rows="4" class="form-control" placeholder="Description"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Your name">
+                        </div>
+                        <a href="#" class="btn btn-main">Upload</a>
+                    </form>
+                </div>
+			</div>
+
+			<div class="col-lg-4">
+                <center>
+				<img src="https://via.placeholder.com/150">
+                </center>
+            </div>
+		</div>
+	</div>
+</section>
+
+{% endblock %}

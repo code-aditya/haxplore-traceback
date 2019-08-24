@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block main %}
+
+<section class="page-title section pb-0">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="text-center">
+                <h1 class="text-capitalize mb-0 text-lg">Blog Grid</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <section class="section blog-post">
+          <div class="container">
+              <div class="row">
+                  <div class="col-lg-4 col-md-6">
+                    <div class="post mb-5">
+                        <a class="image-content" href="blog-single.html">
+                            <img src="{% static 'images/blog/minimal-1.jpg' %}" alt="" class="img-fluid">
+                        </a>
+                
+                        <div class="post-content">
+                            <span class="date text-uppercase text-sm">17 june 2019</span>
+                            <a href="blog-single.html"><h4>If you are starting off with a new domain name with no traffic so to speak of you.</h4></a>
+                        </div>
+                    </div>
+                </div>
+              </div>
+          </div>
+      </section>
+      
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% include static %}
+{% block main %}
+
+<section class="section blog-post">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8">
+				<article class="single-post">
+
+	<div class="single-post-content mt-4">
+		<div class="post-meta mb-4">
+			<span class="text-black">Tags :</span>
+			<span>Design,</span>
+			<span>Development</span>
+
+			<span class="ml-3">-</span>
+			<span class="date">17 june 2019</span>
+		</div>
+		
+		<h3>If you are starting off with a new domain name with no traffic so to speak of you.</h3>
+
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro odio aperiam nostrum sequi mollitia, sapiente eos aspernatur obcaecati molestias cupiditate autem, tempora dicta esse. Reprehenderit unde, maiores at expedita repellendus.</p>	
+	</div>
+</article>
+
+<div class="comments bg-secondary p-4 mt-5">
+	<h4 class="mb-4">Comments</h4>
+
+	<div class="latest-comments">
+		<ul class="list-unstyled">
+			<li>
+
+				<div class="media comments-box mb-45">
+					<img src="images/blog/author1.jpg" alt="" class="img-fluid mr-3">
+					<div class="comments-text media-body">
+						<h5>John Doe</h5>
+						<p>Maecenas fermentum consequat mi Donec fermentum Pelle maleuada nulla amiuis sapien sem aliquet nec commodo eget consequat </p>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+</div>
+
+<div class="comment-form bg-secondary p-4 mt-5">
+	<h4 class="mb-4">Leave a comment</h4>
+	<form action="#" class="comment-form">
+		<div class="form-group">
+			<textarea name="msg" id="msg" cols="30" rows="4" class="form-control" placeholder="Your Comment"></textarea>
+		</div>
+
+		<a href="#" class="btn btn-main">Post Comment</a>
+		
+	</form>
+</div>
+			</div>
+
+			<div class="col-lg-4">
+				<div class="sidebar-widget mt-5 mt-lg-0">
+
+	<div class="widget mb-5 tags">
+		<h4 class="mb-4 widget-title">Tags</h4>
+		<ul class="list-inline">
+			<li class="list-inline-item"><a href="#">Design</a></li>
+			<li class="list-inline-item"><a href="#">Marketing</a></li>
+			<li class="list-inline-item"><a href="#">Development</a></li>
+			<li class="list-inline-item"><a href="#">Seo</a></li>
+			<li class="list-inline-item"><a href="#">agency</a></li>
+			<li class="list-inline-item"><a href="#">wordpress</a></li>
+		</ul>
+	</div>
+
+</div>
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock %}
