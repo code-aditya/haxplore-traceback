@@ -19,8 +19,9 @@ def user_logout(request):
     return redirect('homepage')
 
 
-@decorators.login_required
-def community_home(request):
-    farmer = request.user.farmer
-    print(farmer)
-    pass
+def equipments_list(request):
+    return render(request, 'product_list.html')
+
+
+def equipment_new(request):
+    return render(request, 'equipment_upload.html')

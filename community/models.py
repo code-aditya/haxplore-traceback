@@ -17,7 +17,7 @@ class Community(models.Model):
 
 
 class CommunityFarmer(models.Model):
-    farmer = models.OneToOneField('core.Farmer', on_delete=models.CASCADE)
+    farmer = models.OneToOneField('core.Farmer', on_delete=models.CASCADE, related_name='community')
     community = models.ForeignKey(Community, on_delete=models.CASCADE)
 
 
@@ -35,9 +35,17 @@ class CommunityQuestion(models.Model):
     def tags(self):
         return self.raw_tags.split(';')
 
+    def __str__(self):
+        return f'{self.title}'
+
 
 class CommunityAnswer(models.Model):
     farmer = models.ForeignKey('core.Farmer', on_delete=models.CASCADE, related_name='answers')
-    question = models.ForeignKey(CommunityQuestion, on_delete=models.CASCADE)
+    question = models.ForeignKey(CommunityQuestion, on_delete=models.CASCADE, related_name='answers')
     upvotes = models.IntegerField(default=0)
+    content = models.TextField()
     is_correct = models.BooleanField(default=False)
+    answered = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.question} - {self.farmer}'
