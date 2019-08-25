@@ -23,6 +23,8 @@ def community_home(request):
         'members': member_qs,
         'tags': get_popular_tags()
     }
+    if 'tag' in request.GET:
+        ctx['questions']=models.CommunityQuestion.objects.filter(raw_tags__icontains=request.GET['tag'])
     return render(request, 'question_list.html', context=ctx)
 
 
