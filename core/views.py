@@ -3,6 +3,7 @@ from core import forms
 from django.contrib.auth import login, logout, decorators
 from django.contrib import messages
 from core.models import *
+from community.models import *
 
 def homepage(request):
     return render(request, 'index.html')
@@ -37,7 +38,9 @@ def register(request):
         data['contact']=post['farmer_contact']
         form = forms.FarmerRegistrationForm(data)
         if form.is_valid():
-            form.save()
+            farmer=form.save()
+            CommunityFarmer.objects.create(community=Community.objects.first(),farmer=farmer)
+            redirect('homepage')
         else:
             messages.warning(request,"Form not filled properly")
             print(form.errors)
