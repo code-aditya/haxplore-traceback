@@ -1,0 +1,24 @@
+# Project Information
+- Project Name : AgriConnect
+- Short Project Description : 
+- Team ID : 24
+- Team Name : Traceback
+- Team Members : [Shivansh Siani](https://github.com/Shivanshs9),[Amritansh Singhal](https://github.com/Eerie16/),[Shravan Nayak](https://github.com/BAJUKA)
+- Demo Link :
+- Repository Link : 
+- Labels : Connecting the masses, Enhance the Social-Norms
+
+# Pitch
+India being an agrarian economy over 22% per cent of the population are either cultivators or agricultural labourers, and nearly 53% of the people directly or indirectly dependent on agriculture. Hence, the prosperity of the farming sector is essential for the growth of our country. In a recent survey, it was found that around 76 per cent of the farmers wanted to give up farming. The reasons were bleak future and inadequate income, which can be attributed to bad agricultural practices and lack of use of technology. AgriConnect aims to solve this problem by using the power of digital technology and artificial intelligence. The following are the key aspects of AgriConnect.
+- We create communities where farmers of a given locality or regions are grouped. We believe that instead of targeting the farming issue as a global issue, it must be treated as a group of several local ones. This is because India being a country with diverse environmental factors, one solution for farming is infeasible. Through communities, the farmers will stay connected, and there will be an exchange of knowledge between them. We bring this environment through several features which are described subsequently.
+- We use the power of Machine Learning to give meaningful insights to the farmers regarding various aspects of farming. These include the trends in pricing, yield and many other statistical insights from the data input by the farmers. 
+- A platform where farmers can rent their tools to the other farmers in the community. Some of the pieces of equipment may not be affordable by some farmers. In this case, those who have the priveledges to afford them can rent them when not in use. We provide a platform where farmers of a given community can access these equipments directly contacting the renters.
+- A community forum where farmers in a given community can discuss their problems and help each other solve them.
+
+Through these technologies, we not only connect the farmers and form strong networks but also empower the farmers with modern technology to solve their problem. We further aim to involve the research community into solving several agricultural issues. We have a vast pool of data gathered through farmers which involve their grievances obtained from community forums and various agrarian parameters. This data can be anonymized and open-sourced so that research groups can use this to derive meaningful insights. Moreover, the fact that we divide the farmers into communities based on the region can further help in developing region-specific solutions. 
+
+# Points we want to highlight
+- All Machine Learning models were trained and deployed using Amazon Sage Maker
+- The inference is made by creating an api endpoint api-gateway servie
+- Write about website deployment.
+- Write about chat bot
