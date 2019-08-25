@@ -40,7 +40,7 @@ def register(request):
         if form.is_valid():
             farmer=form.save()
             CommunityFarmer.objects.create(community=Community.objects.first(),farmer=farmer)
-            redirect('homepage')
+            return redirect('homepage')
         else:
             messages.warning(request,"Form not filled properly")
             print(form.errors)
