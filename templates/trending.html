@@ -10,8 +10,12 @@ Community Stats
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>      
 
 <script>
-        window.onload = function () {
-        
+
+
+
+        $(document).ready(function () {
+            
+
         var chart = new CanvasJS.Chart("chartContainer", {
             animationEnabled: true,
             theme: "light2", // "light1", "light2", "dark1", "dark2"
@@ -34,6 +38,6 @@ Community Stats
         });
         chart.render();
         
-        }
+        })
         </script>
 {% endblock %}

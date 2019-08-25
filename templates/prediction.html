@@ -12,6 +12,32 @@ Predictive Analysis
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>      
 <script>
         window.onload = function () {
+            $.ajax({
+                url:"https://5ln9hmjwfc.execute-api.us-east-1.amazonaws.com/prod/price-predict",
+                method:"POST",
+                crossDomain:true,
+                contentType:"application/json",
+                dataType: "json",
+                headers: {
+                    // "Authorization": "AWS4-HMAC-SHA256 Credential= AKIAWEFH2RHNU346BT5M/20190825/us-east-1/execute-api/aws4_request, SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=9be4f7b94abc959cf8a22f7c52c403892e38b6999e848ed6970f33ded7e4e4f8",
+                    // "Access-Control-Allow-Origin":"*",
+                    // "Access-Control-Allow-Headers":"*",//Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
+                    // "Content-Type":"application/json"
+                },
+                data: {
+                    data: "1,2,3,4,5,5,4,3,1,12"
+                },
+                success:function(data,status,xhr){
+                    console.log(data);
+                },
+                error:function(xhr,status,err){
+                    console.log(xhr);
+                    console.log(err);
+                },
+                complete:function(xhr,status){
+                    console.log(xhr);
+                }
+            });
         
         var chart = new CanvasJS.Chart("chartContainer", {
             title: {
