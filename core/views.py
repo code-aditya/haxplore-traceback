@@ -13,6 +13,9 @@ def user_login(request):
             return redirect('community-home')
     return render(request, 'login.html')
 
+def register(request):
+    template_name = 'register.html'
+    return render(request,template_name)
 
 def user_logout(request):
     logout(request)

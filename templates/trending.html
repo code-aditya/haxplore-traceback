@@ -25,10 +25,9 @@ Community Stats
                 type: "column",  
                 showInLegend: true, 
                 legendMarkerColor: "grey",
-                legendText: "MMbbl = one million barrels",
                 dataPoints: [      
                     {% for crop in quantities %}
-                    { y: ,{{crop.1}} label: "{{crop.0}}" },
+                    { y: {{crop.1}}, label: "{{crop.0}}" },
                     {% endfor %}
                 ]
             }]

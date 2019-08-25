@@ -9,6 +9,6 @@ def trending (request):
     template_name='trending.html'
     context={
         # 'crops':Crop.objects.all(),
-        'quantities':[(crop.name,crop.farmercropyield_set.filter(farmer__community=request.user.farmer.community).count()) for crop in Crop.objects.all()]
+        'quantities':[(crop.name,crop.yields.filter(farmer__community=request.user.farmer.community).count()) for crop in Crop.objects.all()]
     }
     return render(request,template_name, context=context)
