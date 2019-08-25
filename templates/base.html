@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <title>
   {% block title %}
-  FarmConnect | Home
+  AgriConnect | Home
     {% endblock %}
 </title>
   <!-- mobile responsive meta -->
@@ -111,7 +111,9 @@
     </section>
     <!-- Footer End -->
     
+    {% if request.user.is_authenticated %}
     <iframe src="{% url 'chat-interface' %}" class="chat-window"></iframe>
+    {% endif %}
 
     <!-- jQuery -->
     <script src="{% static 'plugins/jQuery/jquery.min.js' %}"></script>

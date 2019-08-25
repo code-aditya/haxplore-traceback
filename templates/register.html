@@ -7,7 +7,7 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="text-center">
-          <h1 class="text-capitalize mb-0 text-lg">Find People in your Community</h1>
+          <h1 class="text-capitalize mb-0 text-lg">Register & Find People in your Community</h1>
         </div>
       </div>
     </div>
@@ -19,14 +19,6 @@
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <form id="contact-form" class="contact__form" method="post" action="">
-                    <div class="form-row">
-                        <div class="col-lg-12">
-                            <label>You are a:</label>
-                            <br>
-                            <label class="radio-inline"><input type="radio" name="type" value="farmer" checked>Farmer</label>
-                            <label class="radio-inline"><input type="radio"  name="type" value="expert">Expert</label>
-                        </div>
-                    </div>
                     <div class="form-row">
                     <div class="col-lg-12">
                         <div class="form-group mb-3">
@@ -56,21 +48,6 @@
                             <input name="farmer_contact" type="tel" placeholder="contact" class="form-control">
                         </div>
                     </div>
-                    <div class="col-lg-12" id="expertform" style="display: none;">
-                        <div class="form-group mb-3">
-                            <input name="expert_contact" type="tel" placeholder="contact" class="form-control">
-                        </div>
-                        <div class="form-group mb-3">
-                            <input name="expert_city" type="text" placeholder="city" class="form-control">
-                        </div>
-                        <div class="form-group mb-3">
-                            <input name="expert_state" type="text" placeholder="state" class="form-control">
-                        </div>
-                        <div class="form-group mb-3">
-                            <input type="radio" name="job" value="student">Student
-                            <input type="radio" name="job" value="govt" > Government Official
-                        </div>
-                    </div>
                     <div class="col-lg-12">
                         <div class="text-center">
                             <button class="btn btn-main" name="submit" type="submit">Register</button>
@@ -85,18 +62,7 @@
 {% endblock %}
 {% block somethingelse %}
 <script>
-
-$('input[type=radio][name=type]').change(function() {
-    if (this.value == 'farmer') {
-        $("#expertform").hide();
-        $("#farmerform").show();
-    }
-    else  {
-        $("#expertform").show();
-        $("#farmerform").hide();
-    }
-});
-
+\
 
         $(document).ready(function() {
           if (navigator.geolocation) {

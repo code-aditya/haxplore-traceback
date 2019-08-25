@@ -15,6 +15,19 @@ def user_login(request):
 
 def register(request):
     template_name = 'register.html'
+    if request.method == 'POST':
+        post = request.POST
+        data=dict(
+            name=post['name'], email=post['email'], password=post['password'],user=request.user.id
+        )
+        data['language']=post['language']
+        data['state']=post['farmer_state']
+        data['district']=post['farmer_district']
+        data['land_area']=post['land_area']
+        data['contact']=post['farmer_contact']
+        form = forms.FarmerRegistrationForm(data)
+        if form.is_valid():
+            form.save()
     return render(request,template_name)
 
 def user_logout(request):
