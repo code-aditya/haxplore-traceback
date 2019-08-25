@@ -9,37 +9,42 @@ Predictive Analysis
 </center>
 {% endblock %}
 {% block somethingelse %}
-<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>      
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script>
-        window.onload = function () {
-            $.ajax({
-                url:"https://5ln9hmjwfc.execute-api.us-east-1.amazonaws.com/prod/price-predict",
-                method:"POST",
-                crossDomain:true,
-                contentType:"application/json",
-                dataType: "json",
-                headers: {
-                    // "Authorization": "AWS4-HMAC-SHA256 Credential= AKIAWEFH2RHNU346BT5M/20190825/us-east-1/execute-api/aws4_request, SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=9be4f7b94abc959cf8a22f7c52c403892e38b6999e848ed6970f33ded7e4e4f8",
-                    // "Access-Control-Allow-Origin":"*",
-                    // "Access-Control-Allow-Headers":"*",//Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
-                    // "Content-Type":"application/json"
-                },
-                data: {
-                    data: "1,2,3,4,5,5,4,3,1,12"
-                },
-                success:function(data,status,xhr){
-                    console.log(data);
-                },
-                error:function(xhr,status,err){
-                    console.log(xhr);
-                    console.log(err);
-                },
-                complete:function(xhr,status){
-                    console.log(xhr);
+    actual_data = "{{ actual_result }}".split(",")
+    actual = []
+    for (let i = 0; i < actual_data.length; i++) {
+        actual[i] = {x: i+1, y: Math.round(actual_data[i])}
+    }
+    predicted = []
+    window.onload = function () {
+        $.ajax({
+            url:"https://5ln9hmjwfc.execute-api.us-east-1.amazonaws.com/prod/price-predict",
+            type:"POST",
+            crossDomain:true,
+            contentType:"application/json",
+            dataType: "json",
+            data: JSON.stringify({
+                data: "{{ past_data }}"
+            }),
+            success:function(data,status,xhr){
+                console.log(data);
+                data = data['predictions']
+                for (let i = 0; i < data.length; i++) {
+                    predicted[i] = {x: i+1, y: data[i]['score']}
                 }
-            });
+                chart.render();
+            },
+            error:function(xhr,status,err){
+                console.log(xhr);
+                console.log(err);
+            },
+            complete:function(xhr,status){
+                console.log(xhr);
+            }
+        });
         
-        var chart = new CanvasJS.Chart("chartContainer", {
+        chart = new CanvasJS.Chart("chartContainer", {
             title: {
                 text: "Predictive Analysis"
             },
@@ -53,45 +58,26 @@ Predictive Analysis
                 dockInsidePlotArea: true,
                 itemclick: toogleDataSeries
             },
-            data: [{
-                type:"line",
-                showInLegend: true,
-                markerSize: 0,
-                name:"Actual",
-                dataPoints: [		
-                    { x: 1, y: 850 },
-                    { x: 2, y: 889 },
-                    { x: 3, y: 890 },
-                    { x: 4, y: 899 },
-                    { x: 5, y: 903 },
-                    { x: 6, y: 925 },
-                    { x: 7, y: 899 },
-                    { x: 8, y: 875 },
-                    { x: 9, y: 927 },
-                    { x: 10, y: 949 }
-                ]
+            axisY: {
+                includeZero: false
             },
-            {
-                type:"line",
-                showInLegend: true,
-                markerSize: 0,
-                name:"predicted",
-                dataPoints: [		
-                    { x: 1, y: 800 },
-                    { x: 2, y: 900 },
-                    { x: 3, y: 822 },
-                    { x: 4, y: 819 },
-                    { x: 5, y: 930 },
-                    { x: 6, y: 911 },
-                    { x: 7, y: 899 },
-                    { x: 8, y: 875 },
-                    { x: 9, y: 927 },
-                    { x: 10, y: 949 }
-                ]
-            }
+            data: [
+                {
+                    type:"line",
+                    showInLegend: true,
+                    markerSize: 0,
+                    name:"Actual",
+                    dataPoints: predicted
+                },
+                {
+                    type:"line",
+                    showInLegend: true,
+                    markerSize: 0,
+                    name:"predicted",
+                    dataPoints: actual
+                }
             ]
         });
-        chart.render();
         
         function toogleDataSeries(e){
             if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
@@ -101,7 +87,6 @@ Predictive Analysis
             }
             chart.render();
         }
-        
-        }
-        </script>
+    }
+    </script>
 {% endblock %}
