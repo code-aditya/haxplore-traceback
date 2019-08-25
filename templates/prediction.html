@@ -46,7 +46,7 @@ Predictive Analysis
         
         chart = new CanvasJS.Chart("chartContainer", {
             title: {
-                text: "Predictive Analysis"
+                text: "Predictive Analysis of Wheat"
             },
             toolTip: {
                 shared: true
@@ -58,7 +58,12 @@ Predictive Analysis
                 dockInsidePlotArea: true,
                 itemclick: toogleDataSeries
             },
+            axisX:{
+                title:"Time",
+            },
             axisY: {
+                title:"Price",
+                prefix: "Rs. ",
                 includeZero: false
             },
             data: [

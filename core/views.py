@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from core import forms
 from django.contrib.auth import login, logout, decorators
+from django.contrib import messages
+from core.models import *
 
 def homepage(request):
     return render(request, 'index.html')
@@ -17,8 +19,16 @@ def register(request):
     template_name = 'register.html'
     if request.method == 'POST':
         post = request.POST
+        email = post['email']
+        password = post['password']
+        user,created = User.objects.get_or_create(email=email,username=email)
+        if not created:
+            messages.warning(request,"User already registered")
+            return render(request,template_name)
+        user.set_password(password)
         data=dict(
-            name=post['name'], email=post['email'], password=post['password'],user=request.user.id
+            user=user.id,
+            name=post['name'], email=post['email'], password=post['password']
         )
         data['language']=post['language']
         data['state']=post['farmer_state']
@@ -28,6 +38,9 @@ def register(request):
         form = forms.FarmerRegistrationForm(data)
         if form.is_valid():
             form.save()
+        else:
+            messages.warning(request,"Form not filled properly")
+            print(form.errors)
     return render(request,template_name)
 
 def user_logout(request):
