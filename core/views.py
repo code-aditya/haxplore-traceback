@@ -27,6 +27,7 @@ def register(request):
             messages.warning(request,"User already registered")
             return render(request,template_name)
         user.set_password(password)
+        user.save()
         data=dict(
             user=user.id,
             name=post['name'], email=post['email'], password=post['password']
