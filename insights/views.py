@@ -2,6 +2,7 @@ from django.shortcuts import render
 from core.models import *
 from .forms import StatUploadForm
 import json
+from django.contrib import messages
 
 def predictive(request):
     template_name='prediction.html'
