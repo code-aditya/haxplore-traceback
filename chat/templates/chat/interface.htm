@@ -815,7 +815,9 @@ function Chat_Framework() {
     const chat = data['chat']
     const msg = data['message']
     const msgId = data['message_id']
-    _.addChatMessage(chat, msg, msgId, false)
+    const isSelf = data['is_self']
+    const sender = data['sender']
+    _.addChatMessage(chat, msg, msgId, sender, isSelf)
   }
 
   _.updateListChats = function(data) {
@@ -880,7 +882,7 @@ function Chat_Framework() {
     chatContainer.innerHTML = resultHtml
   }
 
-  _.addChatMessage = function(chat, msg, msg_id, is_self) {
+  _.addChatMessage = function(chat, msg, msg_id, sender, is_self) {
     console.log('addChatMessage')
     let chatContainer = $(`#mainpanel .chats #chat${chat} .messages>ul`)[0]
     let html = `
@@ -926,7 +928,7 @@ function Chat_Framework() {
       chat_id: chat_id,
       message: message
     })
-    this.addChatMessage(chat_id, msg, -1, true)
+    // this.addChatMessage(chat_id, msg, -1, true)
   }
 
 

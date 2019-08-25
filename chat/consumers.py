@@ -100,23 +100,29 @@ class ChatConsumer(JsonWebsocketConsumer):
         tuser = chat.get_target_user(self.user)
         inst = models.Message.objects.create(chat=chat, sender=self.user, content=msg)
         tclient = models.Client.objects.filter(user=tuser).first()
+        sclient = models.Client.objects.filter(user=self.user).first()
+        data = {
+            "type": "broadcast.chat.new_message",
+            "chat": chat_id,
+            "msg": msg,
+            "msg_id": inst.id,
+            "sender": self.user.first_name
+        }
         if tclient:
-            async_to_sync(self.channel_layer.send)(
-                tclient.channel_chat,
-                {
-                    "type": "broadcast.chat.new_message",
-                    "chat": chat_id,
-                    "msg": msg,
-                    "msg_id": inst.id
-                }
-            )
+            data['is_self'] = False
+            async_to_sync(self.channel_layer.send)(tclient.channel_chat, data)
+        if sclient:
+            data['is_self'] = True
+            async_to_sync(self.channel_layer.send)(sclient.channel_chat, data)
 
     def broadcast_chat_new_message(self, event):
         self.send_json({
             "type": ChatConsumer.MESSAGE_TYPE_NEW_MESSAGE,
             "chat": event['chat'],
             "message": event['msg'],
-            "message_id": event['msg_id']
+            "message_id": event['msg_id'],
+            "sender": event['sender'],
+            "is_self": event['is_self']
         })
 
     def receive_json(self, content, **kwargs):
