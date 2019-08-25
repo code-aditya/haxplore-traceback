@@ -940,6 +940,7 @@ function Chat_Framework() {
     let elem = $('#mainpanel>.chats>.chat-content.active')[0]
     let chatId = elem.id.match(/chat(\d+)/)[1]
     _.sendMessage(chatId, message)
+    $(".message-input input").val('')
   };
   
   $('.submit').click(function() {
