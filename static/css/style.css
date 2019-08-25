@@ -801,11 +801,29 @@ textarea.form-control {
 
 /*# sourceMappingURL=maps/style.css.map */
 
-
-.chat-window {
+.chat-wrapper {
   position:fixed;
   bottom:0;
   right:0;
+}
+
+.chat-window {
   height: 400px;
   width: 800px;
+  display: none;
+}
+
+.chat-window.active {
+  display: block;
+}
+
+.btn-chat-toggle {
+  z-index: 999;
+  float: right;
+  height: 50px;
+  width: 50px;
+  background: #af1014;
+  color: #fff;
+  font-size: 3rem;
+  font-weight: 600;
 }

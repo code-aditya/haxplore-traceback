@@ -35,6 +35,8 @@ class ChatConsumer(JsonWebsocketConsumer):
         models.Client.objects.filter(user=self.user).delete()
 
     def disconnect(self, code):
+        if not self.user.is_authenticated:
+            return
         self.clear_client()
 
     # @database_sync_to_async

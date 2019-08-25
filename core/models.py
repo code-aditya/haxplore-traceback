@@ -40,8 +40,11 @@ class Farmer(models.Model):
 
 class Crop(models.Model):
     name = models.CharField(max_length=32)
-    photo = models.ImageField(upload_to=crop_image_save_loc)
+    photo = models.ImageField(upload_to=crop_image_save_loc, null=True, blank=True)
     description = models.TextField(default='')
+
+    def __str__(self):
+        return self.name
 
 
 class FarmerCropYield(models.Model):

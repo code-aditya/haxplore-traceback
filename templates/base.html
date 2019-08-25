@@ -112,7 +112,18 @@
     <!-- Footer End -->
     
     {% if request.user.is_authenticated %}
-    <iframe src="{% url 'chat-interface' %}" class="chat-window"></iframe>
+    <div class="chat-wrapper">
+        <iframe src="{% url 'chat-interface' %}" class="chat-window"></iframe>
+        <button onclick="toggleChat()" class="btn-chat-toggle">ø</button>
+    </div>
+
+
+    <script>
+    function toggleChat() {
+        $(".chat-window").toggleClass("active")
+    }
+    </script>
+
     {% endif %}
 
     <!-- jQuery -->

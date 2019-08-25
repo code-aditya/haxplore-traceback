@@ -13,7 +13,7 @@ Predictive Analysis
 <script>
     actual_data = "{{ actual_result }}".split(",")
     actual = []
-    for (let i = 0; i < actual_data.length; i++) {
+    for (let i = 0; i < actual_data.length - 10; i++) {
         actual[i] = {x: i+1, y: Math.round(actual_data[i])}
     }
     predicted = []
