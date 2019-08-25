@@ -54,6 +54,7 @@ class FarmerCropYield(models.Model):
     pesticides_used = models.IntegerField(help_text='in kg', default=0)
     investment = models.IntegerField(help_text='in Rs.')
     profit = models.IntegerField(help_text='in Rs.')
+    timestamp = models.DateTimeField(auto_now_add=True)
 
 
 class Equipment(models.Model):
