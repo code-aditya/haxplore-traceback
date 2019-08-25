@@ -40,4 +40,4 @@ def stat_upload(request):
             redirect('trending')
         else:
             messages.warning(request,"Invalid form fields")
-    return render(request,template_name)
+    return render(request,template_name,context=context)
