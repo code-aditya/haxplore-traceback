@@ -16,7 +16,7 @@ def community_home(request):
     farmer = request.user.farmer
     cf = farmer.community
     community = cf.community
-    question_qs = models.CommunityQuestion.objects.filter(farmer__community=cf)
+    question_qs = models.CommunityQuestion.objects.filter(farmer__community__community=community)
     member_qs = models.CommunityFarmer.objects.filter(community=community)
     ctx = {
         'questions': question_qs,
@@ -24,7 +24,7 @@ def community_home(request):
         'tags': get_popular_tags()
     }
     if 'tag' in request.GET:
-        ctx['questions']=models.CommunityQuestion.objects.filter(raw_tags__icontains=request.GET['tag'])
+        ctx['questions'] = question_qs.filter(raw_tags__icontains=request.GET['tag'])
     return render(request, 'question_list.html', context=ctx)
 
 
