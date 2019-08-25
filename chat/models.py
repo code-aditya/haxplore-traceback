@@ -12,15 +12,15 @@ class Chat(models.Model):
 
     def get_user1(self):
         try:
-            return self.farmer_chat.farmer1.user
+            return self.farmerchat.farmer1.user
         except Exception:
-            return self.expert_chat.expert.user
+            return self.expertchat.expert.user
 
     def get_user2(self):
         try:
-            return self.farmer_chat.farmer2.user
+            return self.farmerchat.farmer2.user
         except Exception:
-            return self.expert_chat.farmer.user
+            return self.expertchat.farmer.user
 
     def get_target_user(self, user):
         u1 = self.get_user1()
@@ -35,6 +35,12 @@ class FarmerChat(models.Model):
 
     objects = managers.FarmerChatQuerySet.as_manager()
 
+    class Meta:
+        unique_together = ('farmer1', 'farmer2')
+
+    def __str__(self):
+        return f'Farmers @{self.chat}'
+
 
 class ExpertChat(models.Model):
     chat = models.OneToOneField(Chat, on_delete=models.CASCADE)
@@ -42,6 +48,12 @@ class ExpertChat(models.Model):
     expert = models.ForeignKey('core.Expert', on_delete=models.CASCADE)
 
     objects = managers.ExpertChatQuerySet.as_manager()
+
+    class Meta:
+        unique_together = ('farmer', 'expert')
+
+    def __str__(self):
+        return f'Expert @{self.chat}'
 
 
 class Client(models.Model):

@@ -1,9 +1,10 @@
-from channels.generic.websocket import AsyncJsonWebsocketConsumer
+from channels.generic.websocket import AsyncJsonWebsocketConsumer, JsonWebsocketConsumer
 from chat import models
-from channels.db import database_sync_to_async
+# from channels.db import database_sync_to_async
+from asgiref.sync import async_to_sync
 
 
-class ChatConsumer(AsyncJsonWebsocketConsumer):
+class ChatConsumer(JsonWebsocketConsumer):
     MESSAGE_TYPE_NEW_CHAT = 'chat.msg.new_chat'
     MESSAGE_TYPE_NEW_MESSAGE = 'chat.msg.new_message'
     # MESSAGE_TYPE_UPDATE_MESSAGE = 'chat.msg.update_message'
@@ -17,49 +18,50 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
     COMMAND_DELETE_CHAT = 'chat.cmd.delete_chat'
     COMMAND_CHAT_DELETE_MESSAGE = 'chat.cmd.delete_message'
 
-    async def connect(self):
+    def connect(self):
         self.user = self.scope['user']
         if not self.user.is_authenticated:
             return
-        if await self.update_client():
-            await self.accept()
-            await self.initialize()
+        if self.update_client():
+            self.accept()
+            self.initialize()
 
-    async def initialize(self):
-        await self.list_chats()
-        # await self.join_chats()
+    def initialize(self):
+        self.list_chats()
+        # self.join_chats()
 
-    @database_sync_to_async
+    # @database_sync_to_async
     def clear_client(self):
-        models.Client.objects.filter(user=self.user).update(channel_chat=None)
+        models.Client.objects.filter(user=self.user).delete()
 
-    async def disconnect(self, code):
-        await self.clear_client()
+    def disconnect(self, code):
+        self.clear_client()
 
-    @database_sync_to_async
+    # @database_sync_to_async
     def update_client(self):
         clients = models.Client.objects.filter(user=self.user)
         if clients:
             clients.update(channel_chat=self.channel_name)
-            return True
-        return False
+        else:
+            models.Client.objects.create(user=self.user, channel_chat=self.channel_name)
+        return True
 
-    async def chat_send_message(self, event):
-        await self.send_json({
+    def chat_send_message(self, event):
+        self.send_json({
             "type": ChatConsumer.MESSAGE_TYPE_NEW_MESSAGE,
             "chat": event['chat'],
             "data": event['data'],
             "is_self": False #TODO
         })
 
-    @database_sync_to_async
+    # @database_sync_to_async
     def _find_chats_for_user(self, user):
         expert_qs = models.ExpertChat.objects.find_for_user(user)
         farmer_qs = models.FarmerChat.objects.find_for_user(user)
         return [expert.chat for expert in expert_qs] + [farmer.chat for farmer in farmer_qs]
 
-    async def list_chats(self):
-        chats = await self._find_chats_for_user(self.user)
+    def list_chats(self):
+        chats = self._find_chats_for_user(self.user)
         data = [
             {
                 "id": chat.id,
@@ -68,16 +70,58 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
             }
             for chat in chats
         ]
-        await self.send_json({
+        self.send_json({
             "type": ChatConsumer.MESSAGE_TYPE_LIST_CHATS,
             "data": data
         })
 
-    async def receive_json(self, content, **kwargs):
+    def list_chat_messages(self, chat_id):
+        msgs = models.Message.objects.filter(chat_id=chat_id)
+        data = [
+            {
+                "id": msg.id,
+                "sender": msg.sender.first_name,
+                "sent_at": str(msg.sent_at),
+                "content": msg.content,
+                "is_self": msg.sender == self.user
+            }
+            for msg in msgs
+        ]
+        self.send_json({
+            "type": ChatConsumer.MESSAGE_TYPE_LIST_MESSAGES,
+            "data": data,
+            "chat": chat_id
+        })
+
+    def chat_send_message(self, chat_id, msg):
+        chat = models.Chat.objects.get(id=chat_id)
+        tuser = chat.get_target_user(self.user)
+        inst = models.Message.objects.create(chat=chat, sender=self.user, content=msg)
+        tclient = models.Client.objects.filter(user=tuser).first()
+        if tclient:
+            async_to_sync(self.channel_layer.send)(
+                tclient.channel_chat,
+                {
+                    "type": "broadcast.chat.new_message",
+                    "chat": chat_id,
+                    "msg": msg,
+                    "msg_id": inst.id
+                }
+            )
+
+    def broadcast_chat_new_message(self, event):
+        self.send_json({
+            "type": ChatConsumer.MESSAGE_TYPE_NEW_MESSAGE,
+            "chat": event['chat'],
+            "message": event['msg'],
+            "message_id": event['msg_id']
+        })
+
+    def receive_json(self, content, **kwargs):
         command = content.pop('command')
         chat_id = content.get('chat_id', None)
         if command == ChatConsumer.COMMAND_LIST_CHATS:
-            await self.list_chats()
+            self.list_chats()
         elif command == ChatConsumer.COMMAND_CHAT_LIST_MESSAGES:
             self.list_chat_messages(chat_id)
         elif command == ChatConsumer.COMMAND_NEW_CHAT:

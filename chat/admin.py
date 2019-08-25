@@ -1,3 +1,6 @@
 from django.contrib import admin
+from chat import models
 
-# Register your models here.
+@admin.register(models.Chat, models.Client, models.FarmerChat, models.ExpertChat, models.Message)
+class Admin(admin.ModelAdmin):
+    pass

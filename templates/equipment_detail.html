@@ -28,7 +28,7 @@ FarmConnect | Portal
 					<li><span class="text-black">Category - </span><span style="color:gray;">{{equipment.label_category}}</span></li>
 					<li><span class="text-black">Start Date - </span><span style="color:gray;">{{equipment.start_dt | date}}</span></li>
 					<li><span class="text-black">End Date - </span><span style="color:gray;">{{equipment.end_dt | date}}</span></li>
-					<li><span class="text-black">Contact - <button class="btn btn-main btn-xs">Chat</button></li>                    
+					<li><span class="text-black">Contact - <button class="btn btn-main btn-xs" onclick="newChat({{ equipment.farmer.id }})">Chat</button></li> 
                 </ul>
             </div>
             <div class="col-lg-2">
@@ -38,7 +38,15 @@ FarmConnect | Portal
 	</div>
 </section>
 
-<!-- Banner End -->
-
+<script>
+function newChat(farmer_id) {
+	$.post({
+		url: `/chats/new/farmers/${farmer_id}/`,
+		data: {
+			'message': 'I want to buy {{equipment.name}}'
+		}
+	})
+}
+</script>
 
 {% endblock %}
